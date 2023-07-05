@@ -3,9 +3,22 @@ class MenuPage extends HTMLElement {
         super();
         this.dom = this.attachShadow({ mode: "closed" });
 
-        const menuTemplate = document.getElementById("menu-page-template");
-        const menuNode = menuTemplate.content.cloneNode(true);
-        this.dom.appendChild(menuNode);
+        fetch("/test.css").then((response) =>
+            response.text().then((css) => {
+                const style = new CSSStyleSheet();
+                style.replaceSync(css);
+                this.dom.adoptedStyleSheets = [style];
+            })
+        );
+
+        const template = document.createElement("template");
+        fetch("/test.html").then(response => {
+            response.text().then(html => {
+                template.innerHTML = html;
+                const node = template.content.cloneNode(true);
+                this.dom.appendChild(node);
+            });
+        });
     }
 }
 
