@@ -22,11 +22,10 @@ const Router = {
         let page = null
         switch (route) {
             case "/":
-                page = document.createElement("h1");
-                page.textContent = "menu";
+                page = document.createElement("menu-page");
                 break;
             case "/order":
-                page = document.createElement("h1");
+                page = document.createElement("order-page");
                 page.textContent = "order";
                 break;
         }
