@@ -17,30 +17,42 @@ const Router = {
     },
 
     navigate: (route) => {
-        history.pushState({ route }, null, route);
-
-        let page = null
-        switch (route) {
-            case "/":
-                page = document.createElement("h1");
-                page.textContent = "menu";
-                break;
-            case "/order":
-                page = document.createElement("h1");
-                page.textContent = "order";
-                break;
-        }
-        if (page) {
-            const main = document.querySelector("main");
-            main.innerHTML = "";
-            main.appendChild(page);
-            window.scrollX = 0;
-        };
+        nav(route, true);
     },
 
     navigateWithoutHistory: (route) => {
-        console.log(`navigating to ${route} without history`);
+        nav(route, false);
     },
+};
+
+const nav = (route, withHistory = true) => {
+    if (withHistory) {
+        history.pushState({ route }, null, route);
+    }
+
+    let page = null
+    switch (route) {
+        case "/":
+            page = document.createElement("menu-page");
+            break;
+        case "/order":
+            page = document.createElement("order-page");
+            break;
+        default:
+            if (route.startsWith("/product-")) {
+                page = document.createElement("details-page");
+                page.dataset.productId = route.substring(
+                    route.lastIndexOf("-") + 1
+                );
+            }
+            break;
+    }
+    if (page) {
+        document.querySelector("main").innerHTML = "";
+        document.querySelector("main").appendChild(page);
+    }
+
+    window.scrollX = 0;
 };
 
 export default Router;
