@@ -16,3 +16,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     app.router.init();
     app.store.menu = await loadMenu();
 });
+
+window.addEventListener("AppMenuChange", () => {
+    console.log("menu changed!");
+});
