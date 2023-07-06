@@ -18,6 +18,8 @@ class MenuPage extends HTMLElement {
         });
 
         window.addEventListener("AppMenuChange", () => this.render());
+
+        this.render();
     }
 
     render() {
