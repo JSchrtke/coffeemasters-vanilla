@@ -11,13 +11,15 @@ const productTemplate = `<article>
     </a>
 </article>
 `
+
 class ProductItem extends HTMLElement {
     constructor() {
         super();
     };
 
     connectedCallback() {
-        const p = document.getElementById("product-item-template");
+        const p = document.createElement("template");
+        p.innerHTML = productTemplate;
         const productNode = p.content.cloneNode(true);
         this.appendChild(productNode);
 
