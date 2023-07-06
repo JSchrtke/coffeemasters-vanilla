@@ -1,3 +1,5 @@
+import ProductItem from './productItem.js';
+
 class MenuPage extends HTMLElement {
     constructor() {
         super();
@@ -29,20 +31,17 @@ class MenuPage extends HTMLElement {
 
         app.store.menu.forEach((category) => {
             const categoryItem = document.createElement("li");
+            menu.appendChild(categoryItem);
 
             const name = document.createElement("h3");
             name.textContent = category.name
             categoryItem.appendChild(name);
 
-            const products = document.createElement("ul");
             category.products.forEach((product) => {
-                const p = document.createElement("h4");
-                p.textContent = product.name
-                products.appendChild(p);
+                const p = document.createElement("product-item");
+                p.dataset.product = JSON.stringify(product);
+                categoryItem.appendChild(p);
             });
-            categoryItem.appendChild(products);
-
-            menu.appendChild(categoryItem);
         });
     }
 }
