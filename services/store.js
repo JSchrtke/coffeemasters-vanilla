@@ -1,9 +1,26 @@
-const Store = {
+import API from "./api.js";
+
+const StorePrototype = {
     menu: null,
     cart: [],
+
+    getProductById: async (id) => {
+        if (StorePrototype.menu) {
+            StorePrototype.menu = await API.loadMenu();
+        }
+        for (let category of StorePrototype.menu) {
+            for (let product of category.products) {
+                if (product.id == id) {
+                    return product;
+                }
+            }
+        }
+
+        return null;
+    }
 }
 
-const proxyStore = new Proxy(Store, {
+const Store = new Proxy(StorePrototype, {
     set(target, property, newValue) {
         target[property] = newValue;
 
@@ -17,7 +34,8 @@ const proxyStore = new Proxy(Store, {
         }
 
         return true;
-    }
+    },
+
 });
 
-export default proxyStore;
+export default Store;
