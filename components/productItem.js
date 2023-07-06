@@ -32,7 +32,7 @@ class ProductItem extends HTMLElement {
             if (event.target.tagName.toLowerCase()=="button") {
                 //TODO
             } else {
-                app.router.go(`/productData-${productData.id}`);
+                app.router.navigate(`/productData-${productData.id}`);
             }
             event.preventDefault();
         })
